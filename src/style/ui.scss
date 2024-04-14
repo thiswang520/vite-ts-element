@@ -1,0 +1,17 @@
+.m-choose-incon-body{
+    .el-dialog__body{
+        overflow-y: scroll;
+        height: 60rem;
+    }
+}
+.list-tabs__item {
+    .el-tabs__nav{
+        width: 100%;
+        display: flex;
+    }
+    .el-tabs__item{
+        flex: 1;
+        text-align: center;
+    }
+
+}
