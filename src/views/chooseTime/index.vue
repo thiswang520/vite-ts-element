@@ -1,5 +1,5 @@
 <template>
-    <m-choose-time :startOptions="startOptions" @startChange="startChange" @endChange="endChange"></m-choose-time>
+    <m-choose-time @startDate="startDate" @endDate="endDate" :startOptions="startOptions" @startChange="startChange" @endChange="endChange"></m-choose-time>
 </template>
   <script lang="ts" setup>
   interface endValue {
@@ -10,6 +10,14 @@
     console.log(val); 
   }
   let endChange = (val: endValue) => {
+    console.log(val);
+    
+  }
+
+  let startDate = (val: Date) => {
+    console.log(val);
+  }
+  let endDate = (val: Date) => {
     console.log(val);
     
   }
