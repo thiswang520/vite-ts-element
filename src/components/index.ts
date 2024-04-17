@@ -8,6 +8,7 @@ import menus from './menus'
 import progress from './progress'
 import chooseTime from './chooseTime'
 import chooseCity from './chooseCity'
+import scroll from './scroll'
 
 const components = [
     chooseIcon,
@@ -18,7 +19,8 @@ const components = [
     menus,
     progress,
     chooseTime,
-    chooseCity
+    chooseCity,
+    scroll
 ]
 
 export default {
