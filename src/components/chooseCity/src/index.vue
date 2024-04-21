@@ -24,11 +24,11 @@
                 </el-radio-group>
             </el-col>
             <el-col style="margin-top: 2px" :span="16">
-                <el-select v-model="selectValue" filterable size="small">
+                <el-select  @change="changeSelect"  :filter-method="filterMethod" placeholder="请搜索城市" v-model="selectValue" filterable size="small">
                     <el-option v-for="item in Options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                     >
                     </el-option>
                 </el-select>
@@ -83,7 +83,7 @@
 import { Options } from 'element-plus/lib';
 import city from '../lib/city.ts'
 import province from '../lib/province.json'
-import {ref} from 'vue'
+import {ref, onMounted,watch} from 'vue'
 import {City} from './types'
     //分发事件
     let emits = defineEmits(['changge','changeProvince'])
@@ -94,23 +94,11 @@ import {City} from './types'
   let selectValue = ref<string>('')
   let cities = ref(city.cities)
   let provinces = ref(province)
-  let Options = [
-    {
-        label: '123',
-        value: '123',
-        key:'3'
-    },
-    {
-        label: '123',
-        value: '234',
-        key:'1'
-    },
-    {
-        label: '123',
-        value: '56',
-        key:'2'
-    }
-  ]
+  let allCity = ref<City[]>([])
+  let serachValues = ref<string>('')
+  //下来显示城市的数据
+
+  let Options = ref<City[]>([])
   let clickItem = (item: City) => {
     result.value = item.name
     visible.value = false
@@ -126,6 +114,41 @@ import {City} from './types'
   // 关闭弹出层
   visible.value = false
   emits('changeProvince', item)
+}
+onMounted(() => {
+    let values = Object.values(cities.value).flat(2)
+    allCity.value = values
+    Options.value = values
+})
+//自定义搜索过滤
+let filterMethod = (val: string) => {
+    serachValues.value = val
+    let values = Object.values(cities.value).flat(2)
+    if(val === '') {
+        Options.value = values
+    } else {
+        if(radioValue.value === '按城市') {
+            //中文和拼音一起过滤
+            Options.value = values.filter(item => {
+                return item.name.includes(val) || item.spell.includes(val)
+            })
+        }else {
+            //中文过滤
+            Options.value = values.filter(item => {
+                return item.name.includes(val) 
+            })
+        }
+    }
+    
+}
+let changeSelect = (val: number) => {
+    let city = allCity.value.find(item => item.id === val)!
+    result.value = city.name
+    if(radioValue.value === '按城市') {
+        emits('changge',city)
+    }else {
+        emits('changeProvince',city.name)
+    }
 }
   </script>
   <style lang="scss" scoped>
