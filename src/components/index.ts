@@ -9,6 +9,7 @@ import progress from './progress'
 import chooseTime from './chooseTime'
 import chooseCity from './chooseCity'
 import scroll from './scroll'
+import form from './form'
 
 const components = [
     chooseIcon,
@@ -20,7 +21,8 @@ const components = [
     progress,
     chooseTime,
     chooseCity,
-    scroll
+    scroll,
+    form
 ]
 
 export default {
